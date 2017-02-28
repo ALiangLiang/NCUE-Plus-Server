@@ -5,6 +5,7 @@ Desktop.ini
 /app/font/
 /dist/
 node_modules
+config.json
 
 *.cer
 *.pfx
