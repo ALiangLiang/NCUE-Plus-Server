@@ -86,9 +86,9 @@ app.post('/comment', function(req, res) {
   const token = req.body.token;
   console.log(req.body);
   if (!req.body.courseClass || !req.body.courseName || !req.body.content || req.body.anonymous === undefined)
-    return res.status(401).send();
+    return res.status(401).send({});
   else if (!req.body.token)
-    return res.status(403).send();
+    return res.status(403).send({});
   verifyIdentity(token)
     .then((login) => {
       const payload = login.getPayload();
@@ -138,7 +138,7 @@ app.post('/comment', function(req, res) {
             thumbCount: 0
           }), (err) => console.error(err));
 
-    }, () => res.status(401).send());
+    }, () => res.status(401).send({}));
 });
 
 app.post('/thumb', function(req, res) {
@@ -157,8 +157,8 @@ app.post('/thumb', function(req, res) {
             userId: instance[0].get('id'),
             commentId: req.body.commentId
           }));
-    }, () => res.status(401).send())
-    .then(() => res.status(201).send(), (e) => {console.error(e);return res.status(403).send()});
+    }, () => res.status(401).send({}))
+    .then(() => res.status(201).send({}), (e) => {console.error(e);return res.status(403).send({})});
 });
 
 app.delete('/thumb/:commentId', function(req, res) {
@@ -186,9 +186,9 @@ app.delete('/thumb/:commentId', function(req, res) {
               }
             }]
           });
-        }, () => res.status(401).send());
+        }, () => res.status(401).send({}));
     })
-    .then(() => res.status(201).send(), () => res.status(404).send());
+    .then(() => res.status(201).send({}), () => res.status(404).send({}));
 });
 
 app.post('/request', function(req, res) {
@@ -207,8 +207,8 @@ app.post('/request', function(req, res) {
             userId: instances[0].get('id'),
             courseId: req.body.courseId
           }));
-    }, () => res.status(401).send())
-    .then(() => res.status(201).send(), () => res.status(403).send());
+    }, () => res.status(401).send({}))
+    .then(() => res.status(201).send({}), () => res.status(403).send({}));
 });
 
 app.delete('/request/:courseId', function(req, res) {
@@ -230,8 +230,8 @@ app.delete('/request/:courseId', function(req, res) {
               userId: instances[0].get('id'),
               courseId: courseId
             }
-          }), () => res.status(401).send())
-        .then(() => res.status(201).send(), () => res.status(404).send());
+          }), () => res.status(401).send({}))
+        .then(() => res.status(201).send({}), () => res.status(404).send({}));
     });
 });
 
